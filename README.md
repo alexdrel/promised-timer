@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/alexdrel/ramston-steel-yak-shaving-razor.svg?branch=master)](https://travis-ci.org/alexdrel/nodash)
+[![Build Status](https://travis-ci.org/alexdrel/ramston-steel-yak-shaving-razor.svg?branch=master)](https://travis-ci.org/alexdrel/ramston-steel-yak-shaving-razor)
 
 ramston-steel-yak-shaving-razor
 ===
