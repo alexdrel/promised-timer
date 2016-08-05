@@ -1,0 +1,9 @@
+tests
+examples
+build
+webpack*.*
+karma.*
+.git*
+.editor*
+.vscode
+www
