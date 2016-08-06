@@ -1,23 +1,40 @@
-[![Build Status](https://travis-ci.org/alexdrel/ramston-steel-yak-shaving-razor.svg?branch=master)](https://travis-ci.org/alexdrel/ramston-steel-yak-shaving-razor)
+[![Build Status](https://travis-ci.org/alexdrel/promised-timer.svg?branch=master)](https://travis-ci.org/alexdrel/promised-timer)
 
-ramston-steel-yak-shaving-razor
+promised-timer
 ===
 
-Boilerplate for TypeScript / WebPack / Karma + Jasmine web project.
+Promisified Javascript Timer
 
-### TL;DR
-Clone the project into new folder and replace globally following strings:
-* alexdrel
-* Alex Drel
-* ramston-steel-yak-shaving-razor
+```js
+import Timer from 'promised-timer';
+
+let aTimer = Timer.Seconds(5);
+
+startButton.onClick(() => {
+  aTimer.start()
+    .then(() => doSomething())
+    .catch((e) => log('Exception in doSomething', e))
+});
+
+cancelButton.onClick(() => aTimer.cancel());
+```
+
+A timer can be started multiple times, canceled, paused and rewound.
+
+Static ```Timer.delay``` methods serves well for simpler cases.
+
+##### Swapping Promise implementation
+By default Timer assumes native Promise or polyfill but any Promise implementation can be used by setting ```Timer.Promise``` property.
 
 ********
 
-## Development
+## Development Requirements 
+Typescipt 2.0+ 
+
 #### Commands
-* *npm run build* - builds production (minified) version
+* *npm run build* - build a version
 * *npm run clean* - removes dist and build folder
-* *npm start* - starts local dev server at http://localhost:8088/
+* *npm start* - starts local dev server at http://localhost:8006/
 * *npm run lint* - lint
 * *npm test* - runs karma tests
 * *npm run test:watch* - watch tests

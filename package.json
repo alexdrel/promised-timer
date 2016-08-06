@@ -1,26 +1,22 @@
 {
   "author": "Alex Drel",
   "license": "MIT",
-  "name": "ramston-steel-yak-shaving-razor",
+  "name": "promised-timer",
   "version": "0.0.1",
-  "description": "Boilerplate for TypeScript / WebPack / Karma + Jasmine web project.",
-  "main": "build/ramston-steel-yak-shaving-razor.js",
-  "typescript": {
-    "definition": "build/ramston-steel-yak-shaving-razor.d.ts"
-  },
+  "description": "Promisified Javascript Timer",
+  "main": "dist/promised-timer.js",
+  "types": "dist/promised-timer.d.ts",
   "engines": {
     "node": "0.12.x || 4.x.x",
     "npm": "2.x.x"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/alexdrel/ramston-steel-yak-shaving-razor"
+    "url": "https://github.com/alexdrel/promised-timer.git"
   },
   "keywords": [
-    "boilerplate",
-    "scaffolding",
-    "typescript",
-    "webpack"
+    "timer",
+    "promise"
   ],
   "scripts": {
     "build": "npm run lint && tsc -p src -d",
@@ -28,7 +24,7 @@
     "clean": "rimraf build/ dist/",
     "pack": "webpack -p",
     "pack:watch": "webpack --watch",
-    "start": "webpack-dev-server -d --host 0.0.0.0 --port 8088",
+    "start": "webpack-dev-server -d --port 8006",
     "lint": "tslint src/**/*.ts",
     "test": "karma start --singleRun --browsers Firefox",
     "test:once": "karma start --singleRun",

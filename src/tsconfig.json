@@ -6,6 +6,6 @@
         "preserveConstEnums": true,
         "outDir": "../dist/",
         "lib": ["es5", "dom", "es2015.promise"],
-        "declaration": false
+        "declaration": true
     }
 }
