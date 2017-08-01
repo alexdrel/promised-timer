@@ -15,9 +15,9 @@ describe("timer", () => {
   it("is reusable", (done) => {
     let timer = new Timer(1);
     timer.start()
-      .then(()=>timer.start())
-      .then(()=>timer.start())
-      .then(()=>timer.start())
+      .then(() => timer.start())
+      .then(() => timer.start())
+      .then(() => timer.start())
       .then(done);
   });
 
@@ -28,13 +28,13 @@ describe("timer", () => {
 
   it("helps catch exception", (done) => {
     let timer = new Timer(1);
-    timer.start(()=> { throw 1 })
+    timer.start(() => { throw 1 })
       .catch(done);
   });
 
   it("is cancellable", (done) => {
     let timer = new Timer(1);
-    timer.start(()=>{ fail(); done(); });
+    timer.start(() => { fail(); done(); });
     timer.cancel();
     Timer.delay(4, done);
   });
@@ -47,12 +47,19 @@ describe("timer", () => {
     Timer.delay(4, () => { waited = true; timer.rewind(); });
   });
 
+  it("immediate triggered", (done) => {
+    let timer = Timer.Seconds(1000);
+    timer.start(done);
+    timer.trigger();
+    timer.cancel();
+  });
+
   it("immediate", (done) => {
     Timer.delay().then(done);
   });
 
   it("nearly immediate catch", (done) => {
-    Timer.delay(1).then(()=>{ throw 1 }).catch(done);
+    Timer.delay(1).then(() => { throw 1 }).catch(done);
   });
 
   it("immediate 2", (done) => {
@@ -60,6 +67,6 @@ describe("timer", () => {
   });
 
   it("immediate catch", (done) => {
-    Timer.delay(()=>{ throw 1 }).catch(done);
+    Timer.delay(() => { throw 1 }).catch(done);
   });
 });

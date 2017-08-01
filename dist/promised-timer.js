@@ -1,4 +1,5 @@
 "use strict";
+exports.__esModule = true;
 var Timer = (function () {
     function Timer(msec) {
         this.msec = msec;
@@ -44,8 +45,13 @@ var Timer = (function () {
             this.timerId = setTimeout(this.resolve, msec != null ? msec : this.msec);
         }
     };
+    Timer.prototype.trigger = function () {
+        if (this.resolve) {
+            this.resolve();
+        }
+        this.cancel();
+    };
     Timer.Promise = Promise;
     return Timer;
 }());
-exports.__esModule = true;
 exports["default"] = Timer;

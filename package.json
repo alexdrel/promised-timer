@@ -2,13 +2,13 @@
   "author": "Alex Drel",
   "license": "MIT",
   "name": "promised-timer",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Promisified Javascript Timer",
   "main": "dist/promised-timer.js",
   "types": "dist/promised-timer.d.ts",
   "engines": {
-    "node": "0.12.x || 4.x.x",
-    "npm": "2.x.x"
+    "node": "4.x.x || 6.x.x",
+    "npm": ">2.x.x"
   },
   "repository": {
     "type": "git",
@@ -45,7 +45,7 @@
     "rimraf": "^2.5.4",
     "ts-loader": "0.8.2",
     "tslint": "^3.14.0",
-    "typescript": "^2.0.0",
+    "typescript": "^2.4.2",
     "webpack": "^1.13.1",
     "webpack-dev-server": "^1.14.1"
   }

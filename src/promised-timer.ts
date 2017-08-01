@@ -1,4 +1,4 @@
-export declare type Action = () => any ;
+export declare type Action = () => any;
 
 export default class Timer {
 
@@ -19,8 +19,8 @@ export default class Timer {
   // can be used to swap Promise/A+ implementation
   static Promise = Promise;
 
-  timerId: number;
-  resolve: Action;
+  timerId: number | null;
+  resolve: Action | null;
 
   constructor(private msec: number) {
   }
@@ -38,7 +38,7 @@ export default class Timer {
   }
 
   pause() {
-    if(this.timerId != null) {
+    if (this.timerId != null) {
       clearTimeout(this.timerId);
       this.timerId = null;
     }
@@ -53,8 +53,15 @@ export default class Timer {
 
   rewind(msec?: number) {
     this.pause();
-    if(this.resolve) {
+    if (this.resolve) {
       this.timerId = setTimeout(this.resolve, msec != null ? msec : this.msec);
     }
+  }
+
+  trigger() {
+    if (this.resolve) {
+      this.resolve();
+    }
+    this.cancel();
   }
 }

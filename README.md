@@ -17,6 +17,8 @@ startButton.onClick(() => {
 });
 
 cancelButton.onClick(() => aTimer.cancel());
+rightNowButton.onClick(() => aTimer.trigger());
+
 ```
 
 A timer can be started multiple times, canceled, paused and rewound.

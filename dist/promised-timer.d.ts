@@ -5,12 +5,13 @@ export default class Timer {
     static Seconds(sec: number): Timer;
     static Minutes(min: number): Timer;
     static Promise: PromiseConstructor;
-    timerId: number;
-    resolve: Action;
+    timerId: number | null;
+    resolve: Action | null;
     constructor(msec: number);
     cancel(): void;
     start(action?: Action): Promise<void>;
     pause(): void;
     hold(action?: Action): Promise<void>;
     rewind(msec?: number): void;
+    trigger(): void;
 }
