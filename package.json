@@ -2,7 +2,7 @@
   "author": "Alex Drel",
   "license": "MIT",
   "name": "promised-timer",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "Promisified Javascript Timer",
   "main": "dist/promised-timer.js",
   "types": "dist/promised-timer.d.ts",

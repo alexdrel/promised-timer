@@ -17,7 +17,9 @@ export default class Timer {
   }
 
   // can be used to swap Promise/A+ implementation
-  static Promise = Promise;
+  // static Promise = Promise;
+  // Any due to incompatibility between TS promise type and es6-promise
+  static Promise: any = (window as any).Promise;
 
   timerId: number | null;
   resolve: Action | null;
@@ -45,7 +47,7 @@ export default class Timer {
   }
 
   hold(action?: Action): Promise<void> {
-    let p = new Timer.Promise((resolve: Action) => {
+    let p = new (Timer.Promise as PromiseConstructor)((resolve: Action) => {
       this.resolve = resolve;
     });
     return action ? p.then(action) : p;

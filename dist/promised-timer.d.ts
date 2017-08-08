@@ -4,7 +4,7 @@ export default class Timer {
     static delay(msecOrAction?: number | Action, action?: Action): Promise<void>;
     static Seconds(sec: number): Timer;
     static Minutes(min: number): Timer;
-    static Promise: PromiseConstructor;
+    static Promise: any;
     timerId: number | null;
     resolve: Action | null;
     constructor(msec: number);

@@ -51,7 +51,7 @@ var Timer = (function () {
         }
         this.cancel();
     };
-    Timer.Promise = Promise;
+    Timer.Promise = window.Promise;
     return Timer;
 }());
 exports["default"] = Timer;
