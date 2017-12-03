@@ -22,9 +22,11 @@ export default class Timer {
   static Promise: any = (window as any).Promise;
 
   timerId: number | null;
+  startedAt: number;
+  elapsed: number;
   resolve: Action | null;
 
-  constructor(private msec: number) {
+  constructor(private msec: number = Infinity) {
   }
 
   cancel() {
@@ -32,10 +34,26 @@ export default class Timer {
     this.pause();
   }
 
+  reset(msec: number) {
+    this.pause();
+    this.msec = msec;
+    return this;
+  }
+
+  Seconds(sec: number) {
+    return this.reset(sec * 1000);
+  }
+
+  Minutes(min: number) {
+    return this.reset(min * 60 * 1000);
+  }
+
   start(action?: Action): Promise<void> {
     this.cancel();
     let p = this.hold(action);
     this.timerId = setTimeout(this.resolve, this.msec);
+    this.startedAt = Date.now();
+    this.elapsed = 0;
     return p;
   }
 
@@ -43,7 +61,12 @@ export default class Timer {
     if (this.timerId != null) {
       clearTimeout(this.timerId);
       this.timerId = null;
+      this.elapsed += Math.max(0, Date.now() - this.startedAt);
     }
+  }
+
+  resume() {
+    this.rewind(Math.max(0,  this.msec - this.elapsed));
   }
 
   hold(action?: Action): Promise<void> {
@@ -57,6 +80,7 @@ export default class Timer {
     this.pause();
     if (this.resolve) {
       this.timerId = setTimeout(this.resolve, msec != null ? msec : this.msec);
+      this.startedAt = Date.now();
     }
   }
 

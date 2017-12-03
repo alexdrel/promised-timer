@@ -21,9 +21,10 @@ rightNowButton.onClick(() => aTimer.trigger());
 
 ```
 
-A timer can be started multiple times, canceled, paused and rewound.
+A timer can be started multiple times, canceled, paused and rewound. 
+Paused timer can be resumed to continue up to initial time.
 
-Static ```Timer.delay``` methods serves well for simpler cases.
+Static ```Timer.delay``` method serves well for simpler cases.
 
 ##### Swapping Promise implementation
 By default Timer assumes native Promise or polyfill but any Promise implementation can be used by setting ```Timer.Promise``` property.

@@ -29,7 +29,9 @@ module.exports = function(config) {
         reporters: ['progress'],
         captureTimeout: 60000,
         singleRun: false,
-
+        mime: {
+          'text/x-typescript': ['ts','tsx']
+        },
         webpack: {
           cache: true,
           devtool: 'inline-source-map',

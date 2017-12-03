@@ -5,19 +5,17 @@ module.exports = {
     "index": "index.ts",
   },
   output: {
-    path: 'build/',
+    path: __dirname +'build/',
     filename: '[name].js',
     //libraryTarget: "commonjs"
   },
   resolve: {
-    extensions: ['', '.js', '.ts', '.tsx'],
-    modulesDirectories: [ 'src', 'examples', 'node_modules' ],
+    extensions: [ '.js', '.ts', '.tsx'],
   },
   module: {
     loaders: [
-      { test: /\.tsx?$/, loader: 'ts' }
+      { test: /\.tsx?$/, loader: 'ts-loader' }
     ]
   },
-  progress: true,
-  devtool: "sourcemap"
+  devtool: "source-map"
 };

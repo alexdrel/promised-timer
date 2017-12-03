@@ -12,6 +12,11 @@ describe("timer", () => {
     timer.start(done);
   });
 
+  it("late init works", (done) => {
+    let timer = new Timer();
+    timer.Seconds(0.1).start(done);
+  });
+
   it("is reusable", (done) => {
     let timer = new Timer(1);
     timer.start()
@@ -45,6 +50,30 @@ describe("timer", () => {
     timer.start(() => { expect(waited).toBe(true); done(); });
     timer.pause();
     Timer.delay(4, () => { waited = true; timer.rewind(); });
+  });
+
+
+  it("is pausable with elapsed time", (done) => {
+    let timer = Timer.Seconds(0.2);
+    let waited = 0;
+    let started = Date.now();
+    timer.start(() => {
+      expect(waited).toBe(4);
+      expect((Date.now() - started)/1000).toBeCloseTo(0.3, 1);
+      done();
+    });
+    Timer.delay(50)
+      .then(() => (waited++,timer.pause(),Timer.delay(50)))
+      .then(() => (waited++,timer.resume(),Timer.delay(50)))
+      .then(() => (waited++,timer.pause(),Timer.delay(50)))
+      .then(() => (waited++,timer.resume(),Timer.delay(50)));
+  });
+
+  it("unpaused resume", (done) => {
+    let timer = Timer.Seconds(0.3);
+    timer.start(done);
+    Timer.delay(50)
+      .then(() => timer.resume());
   });
 
   it("immediate triggered", (done) => {
