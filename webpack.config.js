@@ -2,7 +2,7 @@ var webpack = require("webpack");
 
 module.exports = {
   entry: {
-    "index": "index.ts",
+    "index": "./examples/index.ts",
   },
   output: {
     path: __dirname +'build/',

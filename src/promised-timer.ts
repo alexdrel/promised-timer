@@ -21,17 +21,28 @@ export default class Timer {
   // Any due to incompatibility between TS promise type and es6-promise
   static Promise: any = (window as any).Promise;
 
-  timerId: number | null;
+  static Cancelled = { cancelled: true };
+
+  private timerId: number | null;
   startedAt: number;
   elapsed: number;
-  resolve: Action | null;
+  private resolve: Action | null;
+  private reject: (r: any) => void | null;
 
   constructor(private msec: number = Infinity) {
+  }
+
+  getSeconds() {
+    return this.msec / 1000;
   }
 
   cancel() {
     this.resolve = null;
     this.pause();
+    if (this.reject) {
+      this.reject(Timer.Cancelled);
+      this.reject = null;
+    }
   }
 
   reset(msec: number) {
@@ -48,6 +59,10 @@ export default class Timer {
     return this.reset(min * 60 * 1000);
   }
 
+  tee(me: (t: Timer) => void) {
+    return me(this), this;
+  }
+
   start(action?: Action): Promise<void> {
     this.cancel();
     let p = this.hold(action);
@@ -57,6 +72,7 @@ export default class Timer {
     return p;
   }
 
+  // pauses started timer, keeps tracks of the elapsed time
   pause() {
     if (this.timerId != null) {
       clearTimeout(this.timerId);
@@ -65,17 +81,32 @@ export default class Timer {
     }
   }
 
+  // resumes paused timer with the remaining time
   resume() {
-    this.rewind(Math.max(0,  this.msec - this.elapsed));
+    this.rewind(Math.max(0, this.msec - this.elapsed));
   }
 
+  // Does not start timer but prepares promise
+  // rewind or trigger to be called later
   hold(action?: Action): Promise<void> {
-    let p = new (Timer.Promise as PromiseConstructor)((resolve: Action) => {
+    let p = new (Timer.Promise as PromiseConstructor)((resolve: Action, reject: Action) => {
       this.resolve = resolve;
+      this.reject = reject;
     });
     return action ? p.then(action) : p;
   }
 
+  // Does not start timer but prepares repeated action
+  // rewind or trigger to be called later for the first and later rounds (delayed when invoked from the action itself)
+  repeat(action?: Action) {
+    this.cancel();
+    let repeatAction: any = () => this.hold(action)
+      .then(repeatAction);
+    return repeatAction();
+  }
+
+  // rewind timer to defult or specified timeout
+  // can be used after start, pause, hold or repeat
   rewind(msec?: number) {
     this.pause();
     if (this.resolve) {
@@ -84,7 +115,11 @@ export default class Timer {
     }
   }
 
+
+  // invoke action immediatelty (async)
+  // can be used after start, pause, hold or repeat
   trigger() {
+    this.reject = null;
     if (this.resolve) {
       this.resolve();
     }
