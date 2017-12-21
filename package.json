@@ -37,16 +37,16 @@
     "json-loader": "^0.5.7",
     "karma": "1.7.1",
     "karma-chrome-launcher": "2.2.0",
-    "karma-firefox-launcher": "1.0.1",
+    "karma-firefox-launcher": "1.1.0",
     "karma-jasmine": "1.1.1",
     "karma-sourcemap-loader": "^0.3.7",
-    "karma-webpack": "^2.0.6",
+    "karma-webpack": "^2.0.9",
     "node-libs-browser": "2.1.0",
     "rimraf": "^2.6.2",
     "ts-loader": "3.2.0",
     "tslint": "^5.8.0",
     "typescript": "^2.6.2",
-    "webpack": "^3.9.1",
-    "webpack-dev-server": "^2.9.5"
+    "webpack": "^3.10.0",
+    "webpack-dev-server": "^2.9.7"
   }
 }

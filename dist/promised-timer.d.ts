@@ -5,13 +5,26 @@ export default class Timer {
     static Seconds(sec: number): Timer;
     static Minutes(min: number): Timer;
     static Promise: any;
-    timerId: number | null;
-    resolve: Action | null;
-    constructor(msec: number);
+    static Cancelled: {
+        cancelled: boolean;
+    };
+    startedAt: number;
+    elapsed: number;
+    private timerId;
+    private resolve;
+    private reject;
+    constructor(msec?: number);
+    getSeconds(): number;
     cancel(): void;
+    reset(msec: number): this;
+    Seconds(sec: number): this;
+    Minutes(min: number): this;
+    tee(me: (t: Timer) => void): this;
     start(action?: Action): Promise<void>;
     pause(): void;
+    resume(): void;
     hold(action?: Action): Promise<void>;
+    repeat(action?: Action): any;
     rewind(msec?: number): void;
     trigger(): void;
 }

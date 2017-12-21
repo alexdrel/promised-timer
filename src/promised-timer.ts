@@ -1,7 +1,7 @@
 export declare type Action = () => any;
 
 export default class Timer {
-
+  // tslint:disable:member-ordering
   static delay(msecOrAction: number | Action = 0, action?: Action) {
     let msec = typeof msecOrAction == 'number' ? msecOrAction : 0;
     let _action = typeof msecOrAction == 'function' ? msecOrAction : action;
@@ -23,11 +23,11 @@ export default class Timer {
 
   static Cancelled = { cancelled: true };
 
-  private timerId: number | null;
   startedAt: number;
   elapsed: number;
+  private timerId: number | null;
   private resolve: Action | null;
-  private reject: (r: any) => void | null;
+  private reject: null | ((r: any) => void | null);
 
   constructor(private msec: number = Infinity) {
   }
@@ -114,7 +114,6 @@ export default class Timer {
       this.startedAt = Date.now();
     }
   }
-
 
   // invoke action immediatelty (async)
   // can be used after start, pause, hold or repeat
