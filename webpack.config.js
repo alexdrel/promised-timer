@@ -5,7 +5,7 @@ module.exports = {
     "index": "./examples/index.ts",
   },
   output: {
-    path: __dirname +'build/',
+    path: __dirname +'/build/',
     filename: '[name].js',
     //libraryTarget: "commonjs"
   },

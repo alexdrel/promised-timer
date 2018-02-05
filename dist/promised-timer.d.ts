@@ -8,8 +8,8 @@ export default class Timer {
     static Cancelled: {
         cancelled: boolean;
     };
-    startedAt: number;
-    elapsed: number;
+    startedAt: number | null;
+    elapsed: number | null;
     private timerId;
     private resolve;
     private reject;

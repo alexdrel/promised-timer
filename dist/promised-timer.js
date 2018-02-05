@@ -4,6 +4,8 @@ var Timer = (function () {
     function Timer(msec) {
         if (msec === void 0) { msec = Infinity; }
         this.msec = msec;
+        this.startedAt = null;
+        this.elapsed = null;
     }
     Timer.delay = function (msecOrAction, action) {
         if (msecOrAction === void 0) { msecOrAction = 0; }
@@ -54,18 +56,21 @@ var Timer = (function () {
         if (this.timerId != null) {
             clearTimeout(this.timerId);
             this.timerId = null;
-            this.elapsed += Math.max(0, Date.now() - this.startedAt);
+            if (this.startedAt != null) {
+                this.elapsed = (this.elapsed || 0) + Math.max(0, Date.now() - this.startedAt);
+            }
+            this.startedAt = null;
         }
     };
     Timer.prototype.resume = function () {
-        this.rewind(Math.max(0, this.msec - this.elapsed));
+        this.rewind(Math.max(0, this.msec - (this.elapsed || 0)));
     };
     Timer.prototype.hold = function (action) {
         var _this = this;
         var p = new Timer.Promise(function (resolve, reject) {
             _this.resolve = resolve;
             _this.reject = reject;
-        });
+        }).then(function () { return _this.pause(); });
         return action ? p.then(action) : p;
     };
     Timer.prototype.repeat = function (action) {

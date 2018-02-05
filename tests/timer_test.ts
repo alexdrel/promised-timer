@@ -137,3 +137,44 @@ describe("timer", () => {
     t.cancel();
   });
 });
+
+describe("elapsed", () => {
+
+  it("finished", (done) => {
+    let timer = Timer.Seconds(0.1);
+    timer.start().then(()=>{
+      expect(timer.elapsed).toBeGreaterThan(100);
+      expect(timer.elapsed).toBeLessThan(500);
+    }).then(done);
+    expect(timer.elapsed).toBe(0);
+  });
+
+  it("canceled", (done) => {
+    let timer = Timer.Seconds(0.2);
+    timer.start().catch(()=>{
+      expect(timer.elapsed).toBeGreaterThan(0);
+      expect(timer.elapsed).toBeLessThan(100);
+    }).then(done);
+    expect(timer.elapsed).toBe(0);
+    Timer.delay(()=>timer.cancel());
+  });
+
+  it("triggered onHold", (done) => {
+    let timer = Timer.Seconds(0.2);
+    timer.hold().then(()=>{
+      expect(timer.elapsed).toBeNull();
+    }).then(done);
+    expect(timer.elapsed).toBeNull();
+    Timer.delay(()=>timer.trigger());
+  });
+
+  it("triggered running", (done) => {
+    let timer = Timer.Seconds(0.2);
+    timer.start().then(()=>{
+      expect(timer.elapsed).toBeGreaterThan(0);
+      expect(timer.elapsed).toBeLessThan(100);
+    }).then(done);
+    expect(timer.elapsed).toBe(0);
+    Timer.delay(10, ()=>timer.trigger());
+  });
+});

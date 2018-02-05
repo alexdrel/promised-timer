@@ -2,13 +2,13 @@ import Timer from '../src/promised-timer';
 
 class MyPromise {
   promise: Promise<any>;
-  done = false;
+  static done = false;
   constructor(resolver: any) {
     this.promise = new Promise(resolver);
   }
 
   then(f: any,r: any) {
-    this.promise.then(() => this.done = true).then(f,r);
+    return this.promise.then(() => MyPromise.done = true).then(f,r);
   }
 };
 
@@ -26,7 +26,6 @@ describe("timer Promise impementation", () => {
   it("works at all", (done) => {
     let timer = new Timer(1);
     let p = timer.start();
-    p.then(()=> { expect((p as any).done).toBe(true); done(); });
+    p.then(()=> { expect(MyPromise.done).toBe(true); done(); });
   });
-
 });

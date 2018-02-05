@@ -23,8 +23,8 @@ export default class Timer {
 
   static Cancelled = { cancelled: true };
 
-  startedAt: number;
-  elapsed: number;
+  startedAt: number | null = null;
+  elapsed: number | null = null;
   private timerId: number | null;
   private resolve: Action | null;
   private reject: null | ((r: any) => void | null);
@@ -77,13 +77,16 @@ export default class Timer {
     if (this.timerId != null) {
       clearTimeout(this.timerId);
       this.timerId = null;
-      this.elapsed += Math.max(0, Date.now() - this.startedAt);
+      if (this.startedAt != null) {
+        this.elapsed = (this.elapsed || 0) + Math.max(0, Date.now() - this.startedAt);
+      }
+      this.startedAt = null;
     }
   }
 
   // resumes paused timer with the remaining time
   resume() {
-    this.rewind(Math.max(0, this.msec - this.elapsed));
+    this.rewind(Math.max(0, this.msec - (this.elapsed || 0)));
   }
 
   // Does not start timer but prepares promise
@@ -92,7 +95,7 @@ export default class Timer {
     let p = new (Timer.Promise as PromiseConstructor)((resolve: Action, reject: Action) => {
       this.resolve = resolve;
       this.reject = reject;
-    });
+    }).then(() => this.pause());
     return action ? p.then(action) : p;
   }
 
