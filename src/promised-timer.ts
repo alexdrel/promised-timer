@@ -25,9 +25,9 @@ export default class Timer {
 
   startedAt: number | null = null;
   elapsed: number | null = null;
-  private timerId: number | null;
-  private resolve: Action | null;
-  private reject: null | ((r: any) => void | null);
+  private timerId?: ReturnType<typeof globalThis.setTimeout> | null;
+  private resolve?: Action | null;
+  private reject?: null | ((r: any) => void | null);
 
   constructor(private msec: number = Infinity) {
   }
@@ -66,7 +66,7 @@ export default class Timer {
   start(action?: Action): Promise<void> {
     this.cancel();
     let p = this.hold(action);
-    this.timerId = setTimeout(this.resolve, this.msec);
+    this.timerId = setTimeout(this.resolve as Action, this.msec);
     this.startedAt = Date.now();
     this.elapsed = 0;
     return p;

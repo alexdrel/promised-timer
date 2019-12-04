@@ -35,6 +35,7 @@ module.exports = function(config) {
         webpack: {
           cache: true,
           devtool: 'inline-source-map',
+          mode: 'development',
 
           resolve: webpack_config.resolve,
           module: webpack_config.module,

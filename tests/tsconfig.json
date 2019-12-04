@@ -3,11 +3,7 @@
         "module": "commonjs",
         "outDir": "../build/",
         "lib": ["es5", "dom", "es2015.promise"],
+        "types": ["jasmine"],
         "noImplicitAny": true
-    },
-    "include": [
-      "../node_modules/@types/jasmine/index.d.ts",
-      "*.tsx",
-      "*.ts"
-    ]
+    }
 }

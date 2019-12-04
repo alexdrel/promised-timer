@@ -10,9 +10,9 @@ export default class Timer {
     };
     startedAt: number | null;
     elapsed: number | null;
-    private timerId;
-    private resolve;
-    private reject;
+    private timerId?;
+    private resolve?;
+    private reject?;
     constructor(msec?: number);
     getSeconds(): number;
     cancel(): void;

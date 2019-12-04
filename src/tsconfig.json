@@ -6,7 +6,8 @@
         "removeComments": true,
         "preserveConstEnums": true,
         "outDir": "../dist/",
-        "lib": ["es5", "dom", "es2015.promise"],
+        "lib": ["es6", "dom"],
+        "types": [ ],
         "declaration": true
-    }
+    },
 }
