@@ -1,11 +1,15 @@
 export declare type Action = () => any;
+export declare type RejectFunc = ((r: any) => void | null);
 
 export default class Timer {
-  // tslint:disable:member-ordering
   static delay(msecOrAction: number | Action = 0, action?: Action) {
-    let msec = typeof msecOrAction == 'number' ? msecOrAction : 0;
-    let _action = typeof msecOrAction == 'function' ? msecOrAction : action;
-    return new Timer(msec).start(_action);
+    let msec = 0;
+    if (typeof msecOrAction === 'function') {
+      action = msecOrAction;
+    } else {
+      msec = msecOrAction;
+    }
+    return new Timer(msec).start(action);
   }
 
   static Seconds(sec: number) {
@@ -19,7 +23,7 @@ export default class Timer {
   // can be used to swap Promise/A+ implementation
   // static Promise = Promise;
   // Any due to incompatibility between TS promise type and es6-promise
-  static Promise: any = (window as any).Promise;
+  static Promise: PromiseConstructorLike = Promise;
 
   static Cancelled = { cancelled: true };
 
@@ -27,7 +31,7 @@ export default class Timer {
   elapsed: number | null = null;
   private timerId?: ReturnType<typeof globalThis.setTimeout> | null;
   private resolve?: Action | null;
-  private reject?: null | ((r: any) => void | null);
+  private reject?: RejectFunc | null;
 
   constructor(private msec: number = Infinity) {
   }
@@ -65,7 +69,7 @@ export default class Timer {
 
   start(action?: Action): Promise<void> {
     this.cancel();
-    let p = this.hold(action);
+    const p = this.hold(action);
     this.timerId = setTimeout(this.resolve as Action, this.msec);
     this.startedAt = Date.now();
     this.elapsed = 0;
@@ -92,7 +96,7 @@ export default class Timer {
   // Does not start timer but prepares promise
   // rewind or trigger to be called later
   hold(action?: Action): Promise<void> {
-    let p = new (Timer.Promise as PromiseConstructor)((resolve: Action, reject: Action) => {
+    const p = new (Timer.Promise as PromiseConstructor)((resolve: Action, reject: RejectFunc) => {
       this.resolve = resolve;
       this.reject = reject;
     }).then(() => this.pause());
@@ -103,7 +107,7 @@ export default class Timer {
   // rewind or trigger to be called later for the first and later rounds (delayed when invoked from the action itself)
   repeat(action?: Action) {
     this.cancel();
-    let repeatAction: any = () => this.hold(action)
+    const repeatAction: any = () => this.hold(action)
       .then(repeatAction);
     return repeatAction();
   }
@@ -128,3 +132,5 @@ export default class Timer {
     this.cancel();
   }
 }
+
+export { default as Stopwatch } from "./stopwatch";

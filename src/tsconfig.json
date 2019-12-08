@@ -1,13 +1,6 @@
 {
-    "compilerOptions": {
-        "module": "commonjs",
-        "strict": true,
-        "noImplicitAny": true,
-        "removeComments": true,
-        "preserveConstEnums": true,
-        "outDir": "../dist/",
-        "lib": ["es6", "dom"],
-        "types": [ ],
-        "declaration": true
-    },
+  "extends": "../tsconfig",
+  "compilerOptions": {
+    "types": [],
+  }
 }

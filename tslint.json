@@ -1,0 +1,40 @@
+{
+  "extends": [
+    "tslint:recommended"
+  ],
+  "rules": {
+    "indent": [
+      true,
+      "spaces"
+    ],
+    "linebreak-style": [
+      true,
+      "LF"
+    ],
+    "semicolon": [
+      true,
+      "always"
+    ],
+    "trailing-comma": [
+      true,
+      {
+        "multiline": "always",
+        "singleline": "never"
+      }
+    ],
+    "arrow-parens": [
+      true,
+      "ban-single-arg-parens"
+    ],
+    "member-access": [
+      false
+    ],
+    "member-ordering": [
+      false
+    ],
+    "quotemark": [
+      false,
+      "avoid-template"
+    ]
+  }
+}

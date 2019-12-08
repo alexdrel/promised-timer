@@ -2,7 +2,7 @@ import Timer from '../src/promised-timer';
 
 document.write('<h1>promised-timer</h1>');
 
-let mainTimer = Timer.Seconds(0.5);
+const mainTimer = Timer.Seconds(0.5);
 mainTimer.start(() => {
   document.querySelector("h1").innerText += " examples";
 });
@@ -10,10 +10,10 @@ mainTimer.start(() => {
 document.write("<input type='text' placeholder='Type and wait 3 sec'></input>");
 document.write(" <small><span id='q1'></span></small>");
 
-let inactivityTimer = Timer.Seconds(3);
-let q1 = document.querySelector('#q1');
+const inactivityTimer = Timer.Seconds(3);
+const q1 = document.querySelector('#q1');
 
-let magic = () => {
+const magic = () => {
   q1.innerHTML = 'Magic happens...';
   Timer.delay(500, () => {
     q1.innerHTML = '';
@@ -33,10 +33,10 @@ document.write("<input type='button' value='Cancel'/> ");
 document.write(" <small><span id='q2'></span></small>");
 document.write(" <h2 id='caboom'/>");
 
-let bTimer = Timer.Seconds(5);
-let statusTimer = Timer.Seconds(0.5);
-let q2 = document.querySelector('#q2');
-let caboom = document.querySelector('#caboom');
+const bTimer = Timer.Seconds(5);
+const statusTimer = Timer.Seconds(0.5);
+const q2 = document.querySelector('#q2');
+const caboom = document.querySelector('#caboom');
 
 statusTimer.repeat(() => q2.innerHTML = '');
 
@@ -68,7 +68,6 @@ document.querySelector('input[value=Resume]').addEventListener('click',
     (document.querySelector('input[value=Resume]') as HTMLButtonElement).disabled = true;
     statusTimer.rewind();
   });
-
 
 document.querySelector('input[value=Cancel]').addEventListener('click',
   () => {

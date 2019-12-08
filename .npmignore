@@ -7,3 +7,4 @@ karma.*
 .editor*
 .vscode
 www
+coverage

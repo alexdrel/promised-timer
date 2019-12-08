@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 var Timer = (function () {
     function Timer(msec) {
         if (msec === void 0) { msec = Infinity; }
@@ -101,5 +103,6 @@ var Timer = (function () {
     Timer.Cancelled = { cancelled: true };
     return Timer;
 }());
-export default Timer;
-export { default as Stopwatch } from "./stopwatch";
+exports.default = Timer;
+var stopwatch_1 = require("./stopwatch");
+exports.Stopwatch = stopwatch_1.default;

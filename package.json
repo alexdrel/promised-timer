@@ -4,11 +4,12 @@
   "name": "promised-timer",
   "version": "0.0.7",
   "description": "Promisified Javascript Timer",
-  "main": "dist/promised-timer.js",
-  "types": "dist/promised-timer.d.ts",
+  "main": "dist/cjs/promised-timer.js",
+  "typings": "dist/promised-timer.d.ts",
+  "module": "dist/promised-timer.js",
   "engines": {
-    "node": ">4.x.x",
-    "npm": ">2.x.x"
+    "node": ">=6.0.0",
+    "npm": ">=5.0.0"
   },
   "repository": {
     "type": "git",
@@ -19,16 +20,15 @@
     "promise"
   ],
   "scripts": {
-    "build": "npm run lint && tsc -p src -d",
     "build:watch": "tsc --watch -p src -d",
     "clean": "rimraf build/ dist/",
-    "pack": "webpack -p",
-    "pack:watch": "webpack --watch",
-    "start": "webpack-dev-server -d --port 8006",
-    "lint": "tslint src/**/*.ts",
+    "lint": "tslint -p src",
+    "prebuild": "rimraf dist && npm run lint",
+    "build": "tsc -p src && tsc -p src -m commonjs --outDir dist/cjs",
     "test": "karma start --singleRun --browsers Firefox",
     "test:once": "karma start --singleRun",
-    "test:watch": "karma start"
+    "test:watch": "karma start",
+    "examples": "webpack-dev-server -d --port 8006"
   },
   "dependencies": {},
   "devDependencies": {
@@ -45,6 +45,7 @@
     "tslint": "^5.20.1",
     "typescript": "^3.7.3",
     "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.9.0"
   }
 }
